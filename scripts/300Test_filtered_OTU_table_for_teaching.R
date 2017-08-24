@@ -150,7 +150,7 @@ assign(paste0("Comm_analysis_list_B_97_minOTU_", threshold_otu_size), list(sampl
 # Comm_analysis_list_B_97_minOTU_6:  The community analysis files in a list:  one with the sample names and one with the OTUs, in Sample X OTU format, no taxonomy)  This is the one that you will likely use the most.  The sample names can be joined with sample information into a larger environment table
 
 ###########
-# write otutablefull_A_97 tables to disk
+# write otutablefull_B_97 tables to disk
 
 otutablelist <- ls(pattern = "otutablefull") # gets all filenames with "otutablefull" in the name
 otutablelist
@@ -159,7 +159,7 @@ for(i in 1:length(otutablelist))
   write.csv(x = get(otutablelist[i]), file = paste0(otutablelist[i], "_with_tax.csv"), row.names = FALSE)
 }
 
-# write Otutablefull_A_97_minOTU_12 tables to disk
+# write Otutablefull_B_97_minOTU_12 tables to disk
 
 Otutablelist <- ls(pattern = "OTUtablefull") # gets all filenames with "Otutablefull" in the name
 Otutablelist
@@ -169,7 +169,7 @@ for(i in 1:length(Otutablelist))
 }
 
 
-# save Comm_analysis_list_A_97_minOTU_12 lists to disk, as RDS objects. Can be read in again via readRDS.
+# save Comm_analysis_list_B_97_minOTU_12 lists to disk, as RDS objects. Can be read in again via readRDS.
 
 commlist <- ls(pattern = "Comm_analysis") # gets all filenames with "Comm_analysis" in the name
 commlist
