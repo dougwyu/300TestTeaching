@@ -1,0 +1,10 @@
+To add the fastq sequence files, go to the /Data/seqs folder and run this command
+
+
+cd 
+
+curl -L https://www.dropbox.com/sh/g3fexpfe2lgnhq9/AABAdC4Yc4wFiiw1HPkTGC75a?dl=1 > seqs/
+
+or
+
+wget --max-redirect=20 https://www.dropbox.com/sh/g3fexpfe2lgnhq9/AABAdC4Yc4wFiiw1HPkTGC75a?dl=1
