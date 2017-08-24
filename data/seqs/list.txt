@@ -1,0 +1,8 @@
+# these will be the files after untarring
+
+-rw-r--r--@ 1 Negorashi2011  staff    39M Aug 17 13:02 B1_S4_L001_R1_001_0.1.fastq.gz
+-rw-r--r--@ 1 Negorashi2011  staff    39M Aug 17 13:02 B1_S4_L001_R2_001_0.1.fastq.gz
+-rw-r--r--@ 1 Negorashi2011  staff    32M Aug 17 13:03 B2_S5_L001_R1_001_0.1.fastq.gz
+-rw-r--r--@ 1 Negorashi2011  staff    32M Aug 17 13:03 B2_S5_L001_R2_001_0.1.fastq.gz
+-rw-r--r--@ 1 Negorashi2011  staff    29M Aug 17 13:03 B3_S6_L001_R1_001_0.1.fastq.gz
+-rw-r--r--@ 1 Negorashi2011  staff    29M Aug 17 13:03 B3_S6_L001_R2_001_0.1.fastq.gz
