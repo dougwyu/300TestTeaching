@@ -221,11 +221,11 @@ env$bodypart <- factor(env$bodypart, levels(env$bodypart)[c(2,1)])
 levels(env$bodypart)
 
 
-lib <- community.jmds
+ordination <- community.jmds
 
 ## extract scores
-sites <- scores(lib, display = "sites")
-spps  <- scores(lib, display = "species")
+sites <- scores(ordination, display = "sites")
+spps  <- scores(ordination, display = "species")
 
 ## compute axis ranges
 xlim <- range(sites[,1], spps[,1])
@@ -235,18 +235,18 @@ ylim <- range(sites[,2], spps[,2])
 colorvec <- c("#EF8A62", "#67A9CF")  # from:  brewer.pal(3,"RdBu")
 # (colorvec <- c("red2", "mediumblue"))
 ## plot
-plot(lib, ylab="", xlab="", xlim=xlim, ylim=ylim, type="n", scaling = 3, main = "Experiment B.  Point size ~ species richness")
-points(lib, display = "sites", pch=16, cex=sprichness/30, col=colorvec[env$bodypart])
+plot(ordination, ylab="", xlab="", xlim=xlim, ylim=ylim, type="n", scaling = 3, main = "Experiment B.  Point size ~ species richness")
+points(ordination, display = "sites", pch=16, cex=sprichness/30, col=colorvec[env$bodypart])
 with(env, legend("bottom", legend = levels(bodypart), bty = "n", col=colorvec, pt.cex=2, pch=16))
 cexnum <- 1
-with(env, ordisurf(lib, sprichness, main="", cex=0.5))
-with(env, ordispider(lib, evenness, cex=cexnum, draw="polygon", col=c("black"), alpha=100, kind="se", conf=0.95, label=TRUE, 
+with(env, ordisurf(ordination, sprichness, main="", cex=0.5))
+with(env, ordispider(ordination, evenness, cex=cexnum, draw="polygon", col=c("black"), alpha=100, kind="se", conf=0.95, label=TRUE, 
                      show.groups=(c("hlll"))))
-with(env, ordispider(lib, evenness, cex=cexnum, draw="polygon", col=c("black"), alpha=100, kind="se", conf=0.95, label=TRUE,
+with(env, ordispider(ordination, evenness, cex=cexnum, draw="polygon", col=c("black"), alpha=100, kind="se", conf=0.95, label=TRUE,
                      show.groups=(c("Hhml"))))
-with(env, ordispider(lib, evenness, cex=cexnum, draw="polygon", col=c("black"), alpha=100, kind="se", conf=0.95, label=TRUE,
+with(env, ordispider(ordination, evenness, cex=cexnum, draw="polygon", col=c("black"), alpha=100, kind="se", conf=0.95, label=TRUE,
                      show.groups=(c("hhhl"))))
-with(env, ordispider(lib, evenness, cex=cexnum, draw="polygon", col=c("black"), alpha=100, kind="se", conf=0.95, label=TRUE,
+with(env, ordispider(ordination, evenness, cex=cexnum, draw="polygon", col=c("black"), alpha=100, kind="se", conf=0.95, label=TRUE,
                      show.groups=(c("mmmm"))))
 
 
