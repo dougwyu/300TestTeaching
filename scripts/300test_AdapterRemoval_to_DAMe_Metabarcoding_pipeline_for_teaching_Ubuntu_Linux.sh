@@ -467,8 +467,9 @@ rm Comparisons_${POOLS}PCRs.txt # large file that doesn't need to be kept
 cp table_300test_B_*.txt ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/OTU_tables/ # copy OTU tables to OTU_tables folder
 cp table_300test_B_*.fas ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/OTU_tables/ # copy OTU repr seqs to OTU_tables folder
 
-# change name of OTU_transient_results folder to include filter.py thresholds and timestamp
-mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies_"$(date +%F_time-%H%M)"/
+# change name of OTU_transient_results folder to include filter.py thresholds. This is the folder that you store.
+# In my own analyses, I include a timestamp in the folder name
+mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/
 
 
 ####################################################################################################
@@ -496,13 +497,9 @@ mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_m
 # Download the RDP output file (table_300test_B_97.RDPmidori.txt) back to the OTU_tables folder and filter out the OTUs that were not assigned to Arthropoda with probability >= 0.80 (ARTHMINPROB).  I had previoulsy determined using a leave-one-out test that assignments to phylum (Arthropoda) and class (Insecta, Arachnida) ranks are reliable if the probability >= 0.80.
 
 echo "Assignment probability minimum set to: " ${ARTHMINPROB}
-ls ${HOMEFOLDER}${ANALYSIS}
-# copy the folder name and replace the value of this variable
-OTUTABLEFOLDER="OTUs_min2PCRs_min4copies_2017-08-23_time-2327"
-
 # We have to use some bash tricks to do this efficiently.
 
-cd ${HOMEFOLDER}${ANALYSIS}/${OTUTABLEFOLDER}/OTU_tables
+cd ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/OTU_tables
 ls
 awk -v arthmin=${ARTHMINPROB} '$8 ~ /Arthropoda/ && $10 >= arthmin { print }' table_300test_B_${SUMASIM}.RDPmidori.txt > table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 
