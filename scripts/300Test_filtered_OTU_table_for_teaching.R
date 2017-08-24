@@ -194,6 +194,7 @@ community <- communitylist[[2]]
 bodypart <- setNames(as.data.frame(as.vector(c("body", "body", "leg", "leg", "leg", "body", "body", "leg"))), c("bodypart"))
 evenness <- setNames(as.data.frame(as.vector(c("Hhml", "hlll", "hlll", "Hhml", "hhhl", "hhhl", "mmmm", "mmmm"))), c("evenness"))
 env <- bind_cols(env, bodypart, evenness)
+env
 
 # species richness for all samples
 (sprichness <- specnumber(community, groups = env$sample_names, MARGIN = 1))
