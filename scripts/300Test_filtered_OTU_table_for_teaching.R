@@ -198,6 +198,14 @@ env <- bind_cols(env, bodypart, evenness)
 # species richness for all samples
 (sprichness <- specnumber(community, groups = env$sample_names, MARGIN = 1))
 
+# These values are a bit low because we are only using 10% of the original file size.  The values for the full sequence datasets are:
+# 
+# Experiment B:  species richness
+# 184 196 184 123 57 76 236 179 
+# Experiment B:  Read totals
+# 114142 42557 33816 69378 79696 65610 44577 34096 
+
+
 # NMDS for all samples
 
 community.jmds <- metaMDS(community, distance = "jaccard", trymax = 20, binary=FALSE)
