@@ -1,0 +1,20 @@
+To add the fastq sequence files, cd to the /data/seqs folder and run this command
+
+cd /data/seqs
+
+curl -L https://www.dropbox.com/s/6wzp9pnne3abu8o/Experiment_B_fastqs.tar?dl=1 > Experiment_B_fastqs.tar
+
+or
+
+wget --max-redirect=20 https://www.dropbox.com/s/6wzp9pnne3abu8o/Experiment_B_fastqs.tar?dl=1
+
+tar -xvf Experiment_B_fastqs.tar  # extract
+
+You will have the following 6 fastq.gz files.  Don't unzip them.
+
+B1_S4_L001_R1_001_0.1.fastq.gz
+B1_S4_L001_R2_001_0.1.fastq.gz
+B2_S5_L001_R1_001_0.1.fastq.gz
+B2_S5_L001_R2_001_0.1.fastq.gz
+B3_S6_L001_R1_001_0.1.fastq.gz
+B3_S6_L001_R2_001_0.1.fastq.gz
