@@ -154,6 +154,9 @@ gzip sickle_cor_panda_B3.fastq
 rm -rf SPAdes_hammer*/
 # remove pandaseq_log_txt files
 rm pandaseq_log_*.txt
+rm sickle*.out
+
+ls -lrtFh # list the files
 
 # The sickle_cor_panda_B{1,2,3} are your final fastq files.
 # They have been adapter-trimmed, quality-trimmed, denoised, and merged.
@@ -184,6 +187,7 @@ mv sickle_cor_panda_B1.fastq.gz folder_B/pool1/
 mv sickle_cor_panda_B2.fastq.gz folder_B/pool2/
 mv sickle_cor_panda_B3.fastq.gz folder_B/pool3/
 
+ls -lrtFh folder_B/pool1
 
 ####################################################################################################
 # 2.2 Sort through each fastq file and determine how many of each tag pair is in each fastq file. Each fastq file takes < 1 min
@@ -279,11 +283,11 @@ mv pool3/heatmap.pdf heatmap_B3.pdf
 
 # Because we independently carried out PCR 3 times for each sample, the 3 PCRs for each sample should show high similarity. If not, then something went wrong in the PCR setup (e.g. PCR failure, use of wrong sample). This step calculates the Renkonen Similarity Index (RSI).  See the DAMe paper for explanation.
 
-# First step is to use filter.py but keep *all* sequences and then run RSI.py. This step can take > 1 hr for a typical sized file (3 pools in )
+# First step is to use filter.py but keep *all* sequences and then run RSI.py. This step can take > 1 hr for a typical sized file (3 pools)
 
 # The folders holding the three pools in Experiment B need to be named pool1/, pool2/, and pool3/.
-# Run filter.py inside folder_B/
 
+# Run filter.py inside folder_B/
 cd ${HOMEFOLDER}data/seqs/folder_B/
 
 mkdir Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B # make a folder for the output
@@ -291,6 +295,8 @@ mkdir Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B # make a folder for the
 python ${DAME}filter.py -psInfo ${HOMEFOLDER}data/PSinfo_300test_COIB.txt -x ${POOLS} -y ${MINPCR_1} -p ${POOLS} -t ${MINREADS_1} -l ${MINLEN} -o Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B
 
 python ${DAME}RSI.py --explicit -o RSI_output_B_min${MINPCR_1}PCR_min${MINREADS_1}copy.txt Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B/Comparisons_${POOLS}PCRs.txt
+
+column -t RSI_output_B_min1PCR_min1copy.txt
 
 # Teaching note.  The RSI.py script compares the similarity of all the PCRs (pools) within each sample. For example, sample mmmmbody was PCRd three times, and the three PCRs are only moderately dissimilar from each other (0.4 < RSI < 0.6), which is acceptable.  Note that the xb samples are completely dissimilar (RSI = 1 = have zero sequences in common). This is expected for these very small negative controls and is a good result.  For more detail, see the DAMe paper.
 
@@ -367,6 +373,9 @@ python ${DAME}plotLengthFreqMetrics_perSample.py -f FilteredReads.fna -p ${HOMEF
 
 python ${DAME}convertToUSearch.py -h
 
+# look at the current sequence headers
+head FilteredReads.fna
+
 # MINPCR=2 # these commands are to make it possible to process multiple filter.py outputs, which are saved in different Filter_min folders
 # MINREADS=4
 
@@ -428,6 +437,7 @@ python ${DAME}tabulateSumaclust.py -i OTUs_${SUMASIM}_sumaclust.fna -o table_300
 
 mv table_300test_B_${SUMASIM}.txt.blast.txt table_300test_B_${SUMASIM}.fas # chg filename suffix to *.fas
 
+column -t table_300test_B_${SUMASIM}.txt | head -n 3
 
 ####################################################################################################
 # 2.10 Move Sumaclust outputs to ${HOMEFOLDER}/analysis
@@ -442,6 +452,7 @@ mkdir OTU_transient_results/
 mkdir OTU_transient_results/OTU_tables/
 
 mv ${HOMEFOLDER}${SEQS}folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
+
 mv ${HOMEFOLDER}${SEQS}software_versions.txt ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/
 
 cd ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
@@ -454,8 +465,11 @@ rm Comparisons_${POOLS}PCRs.txt # large file that doesn't need to be kept
 cp table_300test_B_*.txt ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/OTU_tables/ # copy OTU tables to OTU_tables folder
 cp table_300test_B_*.fas ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/OTU_tables/ # copy OTU repr seqs to OTU_tables folder
 
-# change name of OTU_transient_results folder to include filter.py thresholds and timestamp
-mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies_"$(date +%F_time-%H%M)"/
+# change name of OTU_transient_results folder to include filter.py thresholds. This is the folder that you store.
+mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/
+
+# In my own analyses, I include a timestamp in the folder name
+# ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies_"$(date +%F_time-%H%M)"/
 
 
 ####################################################################################################
@@ -484,11 +498,9 @@ mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_m
 
 echo "Assignment probability minimum set to: " ${ARTHMINPROB}
 
-OTUTABLEFOLDER="OTUs_min2PCRs_min4copies_2017-08-17_time-1634"
+# We have to use some bash tricks to do this efficiently.   gsed is used on macOS to get regex ability.
 
-# We have to use some bash tricks to do this efficiently.   If gsed does not run, try replacing it with sed.
-
-cd ${HOMEFOLDER}${ANALYSIS}/${OTUTABLEFOLDER}/OTU_tables
+cd ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/OTU_tables
 
 awk -v arthmin=${ARTHMINPROB} '$8 ~ /Arthropoda/ && $10 >= arthmin { print }' table_300test_B_${SUMASIM}.RDPmidori.txt > table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 
@@ -500,13 +512,13 @@ seqtk subseq table_300test_B_${SUMASIM}.fas <(cut -f 1 table_300test_B_${SUMASIM
      # <(cut -f 1 table_300test_${sample}_${sim}.RDPmidori_Arthropoda.txt) produces the list of sequences to keep
 
 echo "OTU tables"
-wc -l table_300test_B_${SUMASIM}.RDPmidori.txt
-wc -l table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
+wc -l table_300test_B_${SUMASIM}.RDPmidori.txt # before Arthropoda filtering
+wc -l table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt # after Arthropoda filtering
 echo "fasta files"
-grep ">" table_300test_B_${SUMASIM}.fas | wc -l
-grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l
+grep ">" table_300test_B_${SUMASIM}.fas | wc -l # before Arthropoda filtering
+grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda filtering
 
-# The number of rows in the final OTU table should be equal to the number of sequences in the final fasta file:  220.
+# TThe number of rows in the final OTU table and the final fasta file should be equal to the number of sequences in the final fasta file:  220.
 
 # 220 OTU sequences is the final product. These OTUs have been filtered for reliability and taxonomic assignment to Arthropoda.
 
@@ -522,7 +534,7 @@ exit
 
 ####################################################################################################
 ####################################################################################################
-# APPENDIX.  Fixing the RDP Classifier taxonomic assignments by adding in missing ranks
+# # APPENDIX.  ONE LAST THING.  Fixing the RDP Classifier taxonomic assignments by adding in missing ranks
 ####################################################################################################
 ####################################################################################################
 
@@ -530,6 +542,9 @@ exit
 
 # Hemiptera;Caliscelidae;Bruchomorpha is missing its family in the Midori database. So the identifcation omits the family name. This prevents R from inputting the OTU table.
 
+# DANGEROUS CODE:  RUN ONLY ONCE AFTER GENERATING THE RDP ARTHROPODA-ONLY TABLES, BECAUSE IF RUN MORE THAN ONCE, WILL INSERT THE NEW TAXONOMIC RANK (e.g. Caliscelidae family 0.5) MORE THAN ONCE
+
+# uncomment and run
 # cd ${HOMEFOLDER}${ANALYSIS}/${OTUTABLEFOLDER}/OTU_tables
 #
 # gsed -E 's/Bruchomorpha\tgenus/Caliscelidae\tfamily\t0.50\t\Bruchomorpha\tgenus/' table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt > table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_family.txt
@@ -538,16 +553,6 @@ exit
 #
 # grep "Bruchomorpha" table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 #
-
-
-# DANGEROUS CODE:  RUN ONLY ONCE AFTER GENERATING THE RDP ARTHROPODA-ONLY TABLES, BECAUSE IF RUN MORE THAN ONCE, WILL INSERT THE NEW TAXONOMIC RANK (e.g. Caliscelidae family 0.5)  MORE THAN ONCE
-# OTUTABLEFOLDER="OTUs_min2PCRs_min4copies_2017-08-09_time-1249"
-# for sample in "${sample_libs[@]}"  # ${sample_libs[@]} is the full bash array: A,B,C,D,E,F.  So loop over all samples
-# do
-#      for sim in `seq 96 97`  # ${sample_libs[@]} is the full bash array: A,B,C,D,E,F.  So loop over all samples
-#      do
-#      done
-# done
 
 
 
