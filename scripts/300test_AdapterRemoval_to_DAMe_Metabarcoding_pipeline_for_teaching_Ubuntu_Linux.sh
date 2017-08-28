@@ -494,17 +494,19 @@ mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_m
 # java -Xmx64g -jar ~/scripts/RDPTools/classifier.jar classify -t ~/midori/RDP_out/rRNAClassifier.properties -o ~/Yahan/300Test/teaching/table_300test_B_97.RDPmidori.txt ~/Yahan/300Test/teaching/table_300test_B_97.fas
 ####################################################################################################
 
-# Download the RDP output file (table_300test_B_97.RDPmidori.txt) back to the OTU_tables folder and filter out the OTUs that were not assigned to Arthropoda with probability >= 0.80 (ARTHMINPROB).  I had previoulsy determined using a leave-one-out test that assignments to phylum (Arthropoda) and class (Insecta, Arachnida) ranks are reliable if the probability >= 0.80.
+# Download the RDP output file (table_300test_B_97.RDPmidori.txt) back to the OTU_tables folder and filter out the OTUs that were not assigned to Arthropoda with probability >= 0.80 (ARTHMINPROB).  I had previously determined using a leave-one-out test that assignments to phylum (Arthropoda) and class (Insecta, Arachnida) ranks are reliable if the probability >= 0.80.
+
+### I have put a copy of table_300test_B_97.RDPmidori.txt in the analysis/ folder, for teaching purposes.
 
 echo "Assignment probability minimum set to: " ${ARTHMINPROB}
-# We have to use some bash tricks to do this efficiently.
+# We have to use some bash tricks to do the following bit efficiently.  First, we keep only the OTUs that are assigned to "Arthropoda" at probability >= 0.80, creating a new file called table_300test_B_97.RDPmidori_Arthropoda.txt.  Then we remove the annoying double tab from one of the lines in table_300test_B_97.RDPmidori_Arthropoda.txt (requires a sed and a mv command). Then use a combination of seqtk and cut to filter out the non-Arthropoda OTUs from the file, creating a new file:  table_300test_B_${SUMASIM}_Arthropoda.fas. At the end, your OTU table (table_300test_B_97.RDPmidori_Arthropoda.txt) and your OTU representative fasta file (table_300test_B_${SUMASIM}_Arthropoda.fas) should have the same number of OTUs;  you check this with wc -l.
+
 
 cd ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/OTU_tables
-ls
+ls # confirm you are in the correct folder
 awk -v arthmin=${ARTHMINPROB} '$8 ~ /Arthropoda/ && $10 >= arthmin { print }' table_300test_B_${SUMASIM}.RDPmidori.txt > table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 
 sed -E 's/\t\t/\t/' table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt > table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_nodbltab.txt
-
 mv table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_nodbltab.txt table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 
 seqtk subseq table_300test_B_${SUMASIM}.fas <(cut -f 1 table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt) > table_300test_B_${SUMASIM}_Arthropoda.fas
