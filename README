@@ -1,6 +1,6 @@
 # To download the fastq files
 cd 300TestTeaching/data/seqs
-ls
+ls # you should see "list.txt"
 wget https://www.dropbox.com/s/6wzp9pnne3abu8o/Experiment_B_fastqs.tar?dl=1
 
 # untar the sequence files but DO NOT UNZIP them
