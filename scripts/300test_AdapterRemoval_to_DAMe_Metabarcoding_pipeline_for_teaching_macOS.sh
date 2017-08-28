@@ -520,7 +520,7 @@ echo "fasta files"
 grep ">" table_300test_B_${SUMASIM}.fas | wc -l # before Arthropoda filtering
 grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda filtering
 
-# TThe number of rows in the final OTU table and the final fasta file should be equal to the number of sequences in the final fasta file:  220.
+# The number of rows in the final OTU table and the final fasta file should be equal to the number of sequences in the final fasta file:  220.
 
 # 220 OTU sequences is the final product. These OTUs have been filtered for reliability and taxonomic assignment to Arthropoda.
 
