@@ -1,4 +1,14 @@
-# these will be the files after untarring
+# 1. cd to this folder and run:
+
+wget https://www.dropbox.com/s/6wzp9pnne3abu8o/Experiment_B_fastqs.tar?dl=1
+
+# 2. then untar the sequence files but DO NOT UNZIP them
+
+tar -xvf Experiment_B_fastqs.tar?dl=1  # untar but do not extract from gzip format
+rm Experiment_B_fastqs.tar?dl=1 # remove the original tarred download file
+ls -lrth
+
+# 3. these will be the files after untarring
 
 -rw-r--r--@ 1 Negorashi2011  staff    39M Aug 17 13:02 B1_S4_L001_R1_001_0.1.fastq.gz
 -rw-r--r--@ 1 Negorashi2011  staff    39M Aug 17 13:02 B1_S4_L001_R2_001_0.1.fastq.gz
