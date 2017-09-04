@@ -15,7 +15,7 @@ library("tidyverse"); packageVersion("tidyverse") # includes all data-formatting
 # rm(list=ls())
 
 # set your path to the OTU_tables folder that was the product of the DAMe pipeline
-path_name <- file.path("~/300TestTeaching/analysis/OTUs_min2PCRs_min4copies_2017-08-23_time-2327/OTU_tables")
+path_name <- file.path("~/Xiaoyangmiseqdata/MiSeq_20170410/300TestTeaching/analysis/OTUs_min2PCRs_min4copies/OTU_tables/")
 setwd(path_name)
 getwd()
 

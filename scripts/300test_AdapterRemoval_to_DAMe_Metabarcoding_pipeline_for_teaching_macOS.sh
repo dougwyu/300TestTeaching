@@ -28,7 +28,7 @@ set -o pipefail
 # Set path_to_your_homefolder. Do not use the ~ shortcut.
 # cd into to the 300TestTeaching folder
 pwd # provides the full pathname to the 300TestTeaching folder. Substitute for the pathname below
-HOMEFOLDER="/Users/Negorashi2011/Xiaoyangmiseqdata/MiSeq_20170410/300Test/scripts/300TestTeaching/"
+HOMEFOLDER="/Users/Negorashi2011/Xiaoyangmiseqdata/MiSeq_20170410/300TestTeaching/"
 echo "Home folder is" ${HOMEFOLDER}
 
 SEQS="data/seqs/"
@@ -246,9 +246,10 @@ python ${DAME}splitSummaryByPSInfo.py -p ${HOMEFOLDER}data/PSinfo_300test_COIB.t
 # Teaching Note.  Look at the syntax of splitSummaryByPSInfo.py.  -l 1 indicates that this is for "pool 1", which is the first PCR replicate of experiment B.  DAMe uses this information to search only for tag pairs used in pool 1, in the file PSinfo_300test_COIB.txt.
 
 # Look at the output file splitSummaryByPSInfo_B1.txt.  In the first section ("Tag combinations where the tag pair was used"), Tag13-Tag13 to Tag4-Tag4 and also Tag7-Tag7 have many reads assigned. This is good because these tag pairs were used to amplify insect soups. In contrast, Tag10-Tag10, Tag11-Tag11, Tag12-Tag12 are the extraction blanks. There are very few reads in them. Tag8-Tag8 is the pooled PCR blank and also has few reads.
+column -t splitSummaryByPSInfo_B1.txt | head -n 50
 
 # Look at the output file splitSummaryByPSInfo_B3.txt.  There are fewer rows in the first section. The missing tag pairs have zero reads assigned to them, and they were extraction blanks. So this PCR reaction was very clean.
-
+column -t splitSummaryByPSInfo_B3.txt | head -n 50
 
 ####################################################################################################
 # 2.4 Generate a heatmap of the tag pair read information.
@@ -292,6 +293,7 @@ cd ${HOMEFOLDER}data/seqs/folder_B/
 
 mkdir Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B # make a folder for the output
 
+# requires a minute
 python ${DAME}filter.py -psInfo ${HOMEFOLDER}data/PSinfo_300test_COIB.txt -x ${POOLS} -y ${MINPCR_1} -p ${POOLS} -t ${MINREADS_1} -l ${MINLEN} -o Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B
 
 python ${DAME}RSI.py --explicit -o RSI_output_B_min${MINPCR_1}PCR_min${MINREADS_1}copy.txt Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B/Comparisons_${POOLS}PCRs.txt
@@ -360,6 +362,8 @@ python ${DAME}filter.py -psInfo ${HOMEFOLDER}data/PSinfo_300test_COIB.txt -x ${P
 
 # Teaching note. The output file is called FilteredReads.fna, inside the Filter_min2PCRs_min4copies_B folder.  This is the product of all your hard work!  The next step is to figure out how best to cluster these reads into OTUs.
 
+head FilteredReads.fna
+
 # re-run plotLengthFreqMetrics_perSample.py
 cd ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
 python ${DAME}plotLengthFreqMetrics_perSample.py -f FilteredReads.fna -p ${HOMEFOLDER}data/PSinfo_300test_COIB.txt -n 3
@@ -384,6 +388,7 @@ cd ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_
 
 python ${DAME}convertToUSearch.py -i FilteredReads.fna -lmin ${MINLEN} -lmax ${MAXLEN}
 gsed 's/ count/;size/' FilteredReads.forsumaclust.fna > FilteredReads.forvsearch.fna
+head FilteredReads.forvsearch.fna
 
 vsearch --sortbysize FilteredReads.forvsearch.fna --output FilteredReads.forvsearch_sorted.fna
 vsearch --uchime_denovo FilteredReads.forvsearch_sorted.fna --nonchimeras FilteredReads.forvsearch_sorted_nochimeras.fna
@@ -520,6 +525,9 @@ echo "fasta files"
 grep ">" table_300test_B_${SUMASIM}.fas | wc -l # before Arthropoda filtering
 grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda filtering
 
+# cleanup
+rm -f table_300test_B_97.RDPmidori_Arthropoda_nodbltab.txt
+
 # The number of rows in the final OTU table and the final fasta file should be equal to the number of sequences in the final fasta file:  220.
 
 # 220 OTU sequences is the final product. These OTUs have been filtered for reliability and taxonomic assignment to Arthropoda.
@@ -529,9 +537,6 @@ grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda fi
 # The R script is:  300Test_filtered_OTU_table_for_teaching.R
 
 # The final outputs are a fasta file with the OTU representative sequences, an OTU table (OTU x sample) with taxonomic assignments, and community analysis files (sample X OTU + an environment table (sample X environmental variables)). We can carry out community analysis with the last output.
-
-#### End script here.
-exit
 
 
 ####################################################################################################
@@ -554,8 +559,11 @@ exit
 # mv table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_family.txt table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 #
 # grep "Bruchomorpha" table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
-#
+# #
 
+
+#### End script here.
+exit
 
 
 ####################################################################################################
