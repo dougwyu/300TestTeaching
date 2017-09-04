@@ -541,7 +541,7 @@ rm -f table_300test_B_97.RDPmidori_Arthropoda_nodbltab.txt
 
 ####################################################################################################
 ####################################################################################################
-# # APPENDIX.  ONE LAST THING.  Fixing the RDP Classifier taxonomic assignments by adding in missing ranks
+# APPENDIX.  ONE LAST THING.  Fixing the RDP Classifier taxonomic assignments by adding in missing ranks
 ####################################################################################################
 ####################################################################################################
 

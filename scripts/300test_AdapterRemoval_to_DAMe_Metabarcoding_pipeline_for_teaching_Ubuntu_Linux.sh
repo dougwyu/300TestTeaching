@@ -245,9 +245,10 @@ python ${DAME}splitSummaryByPSInfo.py -p ${HOMEFOLDER}data/PSinfo_300test_COIB.t
 # Teaching Note.  Look at the syntax of splitSummaryByPSInfo.py.  -l 1 indicates that this is for "pool 1", which is the first PCR replicate of experiment B.  DAMe uses this information to search only for tag pairs used in pool 1, in the file PSinfo_300test_COIB.txt.
 
 # Look at the output file splitSummaryByPSInfo_B1.txt.  In the first section ("Tag combinations where the tag pair was used"), Tag13-Tag13 to Tag4-Tag4 and also Tag7-Tag7 have many reads assigned. This is good because these tag pairs were used to amplify insect soups. In contrast, Tag10-Tag10, Tag11-Tag11, Tag12-Tag12 are the extraction blanks. There are very few reads in them. Tag8-Tag8 is the pooled PCR blank and also has few reads.
+column -t splitSummaryByPSInfo_B1.txt | head -n 50
 
 # Look at the output file splitSummaryByPSInfo_B3.txt.  There are fewer rows in the first section. The missing tag pairs have zero reads assigned to them, and they were extraction blanks. So this PCR reaction was very clean.
-
+column -t splitSummaryByPSInfo_B3.txt | head -n 50
 
 ####################################################################################################
 # 2.4 Generate a heatmap of the tag pair read information.
@@ -291,6 +292,7 @@ cd ${HOMEFOLDER}data/seqs/folder_B/
 
 mkdir Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B # make a folder for the output
 
+# requires a minute
 python ${DAME}filter.py -psInfo ${HOMEFOLDER}data/PSinfo_300test_COIB.txt -x ${POOLS} -y ${MINPCR_1} -p ${POOLS} -t ${MINREADS_1} -l ${MINLEN} -o Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B
 
 python ${DAME}RSI.py --explicit -o RSI_output_B_min${MINPCR_1}PCR_min${MINREADS_1}copy.txt Filter_min${MINPCR_1}PCRs_min${MINREADS_1}copies_B/Comparisons_${POOLS}PCRs.txt
@@ -358,6 +360,8 @@ mkdir Filter_min${MINPCR}PCRs_min${MINREADS}copies_B/
 python ${DAME}filter.py -psInfo ${HOMEFOLDER}data/PSinfo_300test_COIB.txt -x ${POOLS} -y ${MINPCR} -p ${POOLS} -t ${MINREADS} -l ${MINLEN} -o Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
 
 # Teaching note. The output file is called FilteredReads.fna, inside the Filter_min2PCRs_min4copies_B folder.  This is the product of all your hard work!  The next step is to figure out how best to cluster these reads into OTUs.
+
+head FilteredReads.fna
 
 # re-run plotLengthFreqMetrics_perSample.py
 cd ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
@@ -468,9 +472,11 @@ cp table_300test_B_*.txt ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/OTU_table
 cp table_300test_B_*.fas ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/OTU_tables/ # copy OTU repr seqs to OTU_tables folder
 
 # change name of OTU_transient_results folder to include filter.py thresholds. This is the folder that you store.
-# In my own analyses, I include a timestamp in the folder name
+
 mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/
 
+# In my own analyses, I include a timestamp in the folder name
+# ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies_"$(date +%F_time-%H%M)"/
 
 ####################################################################################################
 # 2.11 Assign taxonomies to the OTU representative sequences, using RDP Classifier and the Midori dataset
@@ -518,6 +524,9 @@ wc -l table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt # after Arthropoda fil
 echo "fasta files"
 grep ">" table_300test_B_${SUMASIM}.fas | wc -l # before Arthropoda filtering
 grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda filtering
+
+# cleanup
+rm -f table_300test_B_97.RDPmidori_Arthropoda_nodbltab.txt
 
 # The number of rows in the final OTU table and the final fasta file should be equal to the number of sequences in the final fasta file:  220.
 
@@ -654,7 +663,7 @@ sudo apt-get install r-base-dev
 # download binary from https://rstudio.org
 
 # on Ubuntu
-# download binary from https://rstudio.org
+# download rstudio-xenial-1.0.153-amd64.deb from https://rstudio.org
 cd Downloads/
 sudo dpkg -i rstudio-xenial-1.0.153-amd64.deb
 sudo apt-get -f install
