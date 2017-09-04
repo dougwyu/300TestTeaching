@@ -75,7 +75,6 @@ echo "AdapterRemoval ver. 2.2.2" >> software_versions.txt  # cannot redirect the
 
 # identifies whether and which Illumina adapters are left in the raw data. Only needs to be run for one library (e.g. B1)
 AdapterRemoval --identify-adapters --file1 B1_S4_L001_R1_001_0.1.fastq.gz --file2 B1_S4_L001_R2_001_0.1.fastq.gz
-
 # Teaching note. IMPORTANT:  Before running the following commands, note that if the command wraps around to a 2nd line, pressing ctrl-enter will move the cursor into the second line of the current command, NOT into the next command. If you do not move your cursor into the next command (using the down-arrow key), pressing ctrl-enter again will merely send the same command again. Usually, this just wastes time, but it could cause serious errors, if the command is not written properly. Always check where your cursor is before pressing ctrl-enter.
 
 # removes adapters from the fastq reads and outputs new files with fixed fastq files.
@@ -388,6 +387,7 @@ cd ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_
 
 python ${DAME}convertToUSearch.py -i FilteredReads.fna -lmin ${MINLEN} -lmax ${MAXLEN}
 gsed 's/ count/;size/' FilteredReads.forsumaclust.fna > FilteredReads.forvsearch.fna
+head FilteredReads.forsumaclust.fna
 head FilteredReads.forvsearch.fna
 
 vsearch --sortbysize FilteredReads.forvsearch.fna --output FilteredReads.forvsearch_sorted.fna
@@ -471,11 +471,11 @@ cp table_300test_B_*.txt ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/OTU_table
 cp table_300test_B_*.fas ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/OTU_tables/ # copy OTU repr seqs to OTU_tables folder
 
 # change name of OTU_transient_results folder to include filter.py thresholds. This is the folder that you store.
+
 mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/
 
 # In my own analyses, I include a timestamp in the folder name
 # ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies_"$(date +%F_time-%H%M)"/
-
 
 ####################################################################################################
 # 2.11 Assign taxonomies to the OTU representative sequences, using RDP Classifier and the Midori dataset
@@ -559,7 +559,6 @@ rm -f table_300test_B_97.RDPmidori_Arthropoda_nodbltab.txt
 # mv table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_family.txt table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 #
 # grep "Bruchomorpha" table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
-# #
 
 
 #### End script here.
@@ -567,7 +566,7 @@ exit
 
 
 ####################################################################################################
-# Record of how I installed the software. Don't run this.
+# Record of how I installed the software. Don't run this
 ####################################################################################################
 # The script uses quite a bit of open-source software and has been runon macOS and Ubuntu Linux.  Much of this software can be installed using Homebrew, which is a "package manager" for macOS.  Install that, and most software can then be installed and managed with a single command.
 # In principle, you only need to do this once.  The whole installation can require several hours, depending on internet speed and whether you are installing on macOS or Linux
