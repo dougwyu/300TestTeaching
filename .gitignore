@@ -6,3 +6,5 @@
 *.out
 
 data/MTB/~$MTB_AllInputRefSeqs_20170726.xlsx
+
+scripts/software_versions.txt
