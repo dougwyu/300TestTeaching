@@ -75,6 +75,7 @@ echo "AdapterRemoval ver. 2.2.2" >> software_versions.txt  # cannot redirect the
 
 # identifies whether and which Illumina adapters are left in the raw data. Only needs to be run for one library (e.g. B1)
 AdapterRemoval --identify-adapters --file1 B1_S4_L001_R1_001_0.1.fastq.gz --file2 B1_S4_L001_R2_001_0.1.fastq.gz
+
 # Teaching note. IMPORTANT:  Before running the following commands, note that if the command wraps around to a 2nd line, pressing ctrl-enter will move the cursor into the second line of the current command, NOT into the next command. If you do not move your cursor into the next command (using the down-arrow key), pressing ctrl-enter again will merely send the same command again. Usually, this just wastes time, but it could cause serious errors, if the command is not written properly. Always check where your cursor is before pressing ctrl-enter.
 
 # removes adapters from the fastq reads and outputs new files with fixed fastq files.
@@ -113,6 +114,7 @@ echo "SPAdes v3.10.1" >> software_versions.txt # SPAdes v3.10.1
 # as of 5 Sep 2017, there is a new version of spades:  3.11.1.  We are not using it here, but you should use it in real life
 
 # Each pair of (the reduced) fastq files typically requires 4-5 minutes. The original files required ~45 minutes per library, on an Core i5 MacBook Pro, using only 3 threads. We are not denoising the unpaired reads.
+# ~/src/SPAdes-3.11.0-Darwin/bin/spades.py # v. 3.11 as an option
 
 spades.py --only-error-correction -1 sickle_B1_R1.fq -2 sickle_B1_R2.fq -o SPAdes_hammer_B1 -t 3
 spades.py --only-error-correction -1 sickle_B2_R1.fq -2 sickle_B2_R2.fq -o SPAdes_hammer_B2 -t 3
@@ -252,6 +254,7 @@ column -t splitSummaryByPSInfo_B1.txt | head -n 50
 # Look at the output file splitSummaryByPSInfo_B3.txt.  There are fewer rows in the first section. The missing tag pairs have zero reads assigned to them, and they were extraction blanks. So this PCR reaction was very clean.
 column -t splitSummaryByPSInfo_B3.txt | head -n 50
 
+
 ####################################################################################################
 # 2.4 Generate a heatmap of the tag pair read information.
 ####################################################################################################
@@ -389,6 +392,7 @@ cd ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_
 
 python ${DAME}convertToUSearch.py -i FilteredReads.fna -lmin ${MINLEN} -lmax ${MAXLEN}
 gsed 's/ count/;size/' FilteredReads.forsumaclust.fna > FilteredReads.forvsearch.fna
+
 head FilteredReads.forsumaclust.fna
 head FilteredReads.forvsearch.fna
 
@@ -408,7 +412,7 @@ rm FilteredReads.forvsearch_sorted_nochimeras.fna
 
 
 ####################################################################################################
-# 2.8 Analyse FilteredReads.fna for pairwise similarities to choose similarity threshold for Sumaclust
+# 2.9 Analyse FilteredReads.fna for pairwise similarities to choose similarity threshold for Sumaclust
 ####################################################################################################
 
 python ${DAME}assessClusteringParameters.py -h
@@ -424,8 +428,9 @@ python ${DAME}assessClusteringParameters.py -i FilteredReads.forsumaclust.nochim
 
 # Teaching note.  The key result is that very few to no reads are similar at 96-97%.  This similarity threshold represents the famous 'barcoding gap,' and we choose 97% as the clustering threshold for Sumaclust
 
+
 ####################################################################################################
-# 2.9 Sumaclust clustering and convert Sumaclust output to table format
+# 2.10 Sumaclust clustering and convert Sumaclust output to table format
 ####################################################################################################
 
 python ${DAME}tabulateSumaclust.py -h
@@ -446,8 +451,9 @@ mv table_300test_B_${SUMASIM}.txt.blast.txt table_300test_B_${SUMASIM}.fas # chg
 
 column -t table_300test_B_${SUMASIM}.txt | head -n 3
 
+
 ####################################################################################################
-# 2.10 Move Sumaclust outputs to ${HOMEFOLDER}/analysis
+# 2.11 Move Sumaclust outputs to ${HOMEFOLDER}/analysis
 ####################################################################################################
 
 # We now have our OTUs table and OTU representative sequences.
@@ -479,8 +485,9 @@ mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_m
 # In my own analyses, I include a timestamp in the folder name
 # ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies_"$(date +%F_time-%H%M)"/
 
+
 ####################################################################################################
-# 2.11 Assign taxonomies to the OTU representative sequences, using RDP Classifier and the Midori dataset
+# 2.12 Assign taxonomies to the OTU representative sequences, using RDP Classifier and the Midori dataset
 ####################################################################################################
 
 # I upload the OTU fasta files to a supercluster (hpc.uea.ac.uk) and assign taxonomies via RDP Classifier on the Midori database. I had previously trained Classifier on Midori. I haven't tried running on my macOS because on the cluster, this step requires ~18GB of RAM to run and crashes on the cluster if it doesn't get that.  RDP classification takes ~4 mins with this dataset.
@@ -508,7 +515,6 @@ mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_m
 echo "Assignment probability minimum set to: " ${ARTHMINPROB}
 
 # We have to use some bash tricks to do the following bit efficiently.   gsed is used on macOS to get regex ability. First, we keep only the OTUs that are assigned to "Arthropoda" at probability >= 0.80, creating a new file called table_300test_B_97.RDPmidori_Arthropoda.txt.  Then we remove the annoying double tab from one of the lines in table_300test_B_97.RDPmidori_Arthropoda.txt (requires a sed and a mv command). Then use a combination of seqtk and cut to filter out the non-Arthropoda OTUs from the file, creating a new file:  table_300test_B_${SUMASIM}_Arthropoda.fas. At the end, your OTU table (table_300test_B_97.RDPmidori_Arthropoda.txt) and your OTU representative fasta file (table_300test_B_${SUMASIM}_Arthropoda.fas) should have the same number of OTUs;  you check this with wc -l.
-
 
 cd ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/OTU_tables
 ls # confirm you are in the correct folder

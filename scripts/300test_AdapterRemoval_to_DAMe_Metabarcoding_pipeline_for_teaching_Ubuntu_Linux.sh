@@ -109,6 +109,7 @@ rm Adaptermv*.*
 spades.py -h
 spades.py -v # confirm the version
 echo "SPAdes v3.10.1" >> software_versions.txt # SPAdes v3.10.1
+# as of 5 Sep 2017, there is a new version of spades:  3.11.1.  We are not using it here, but you should use it in real life
 
 # Each pair of (the reduced) fastq files typically requires ~8 minutes on a VirtualBox installation of Ubuntu Linux with 2 threads.
 # The original files required ~45 minutes per library, on an Core i5 MacBook Pro, using 3 threads. We are not denoising the unpaired reads.
@@ -250,6 +251,7 @@ column -t splitSummaryByPSInfo_B1.txt | head -n 50
 # Look at the output file splitSummaryByPSInfo_B3.txt.  There are fewer rows in the first section. The missing tag pairs have zero reads assigned to them, and they were extraction blanks. So this PCR reaction was very clean.
 column -t splitSummaryByPSInfo_B3.txt | head -n 50
 
+
 ####################################################################################################
 # 2.4 Generate a heatmap of the tag pair read information.
 ####################################################################################################
@@ -361,7 +363,7 @@ python ${DAME}filter.py -psInfo ${HOMEFOLDER}data/PSinfo_300test_COIB.txt -x ${P
 
 # Teaching note. The output file is called FilteredReads.fna, inside the Filter_min2PCRs_min4copies_B folder.  This is the product of all your hard work!  The next step is to figure out how best to cluster these reads into OTUs.
 
-head FilteredReads.fna
+head ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B/FilteredReads.fna
 
 # re-run plotLengthFreqMetrics_perSample.py
 cd ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
@@ -407,7 +409,7 @@ rm FilteredReads.forvsearch_sorted_nochimeras.fna
 
 
 ####################################################################################################
-# 2.8 Analyse FilteredReads.fna for pairwise similarities to choose similarity threshold for Sumaclust
+# 2.9 Analyse FilteredReads.fna for pairwise similarities to choose similarity threshold for Sumaclust
 ####################################################################################################
 
 python ${DAME}assessClusteringParameters.py -h
@@ -423,8 +425,9 @@ python ${DAME}assessClusteringParameters.py -i FilteredReads.forsumaclust.nochim
 
 # Teaching note.  The key result is that very few to no reads are similar at 96-97%.  This similarity threshold represents the famous 'barcoding gap,' and we choose 97% as the clustering threshold for Sumaclust
 
+
 ####################################################################################################
-# 2.9 Sumaclust clustering and convert Sumaclust output to table format
+# 2.10 Sumaclust clustering and convert Sumaclust output to table format
 ####################################################################################################
 
 python ${DAME}tabulateSumaclust.py -h
@@ -445,8 +448,9 @@ mv table_300test_B_${SUMASIM}.txt.blast.txt table_300test_B_${SUMASIM}.fas # chg
 
 column -t table_300test_B_${SUMASIM}.txt | head -n 3
 
+
 ####################################################################################################
-# 2.10 Move Sumaclust outputs to ${HOMEFOLDER}/analysis
+# 2.11 Move Sumaclust outputs to ${HOMEFOLDER}/analysis
 ####################################################################################################
 
 # We now have our OTUs table and OTU representative sequences.
@@ -478,8 +482,9 @@ mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_m
 # In my own analyses, I include a timestamp in the folder name
 # ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies_"$(date +%F_time-%H%M)"/
 
+
 ####################################################################################################
-# 2.11 Assign taxonomies to the OTU representative sequences, using RDP Classifier and the Midori dataset
+# 2.12 Assign taxonomies to the OTU representative sequences, using RDP Classifier and the Midori dataset
 ####################################################################################################
 
 # I upload the OTU fasta files to a supercluster (hpc.uea.ac.uk) and assign taxonomies via RDP Classifier on the Midori database. I had previously trained Classifier on Midori. I haven't tried running on my macOS because on the cluster, this step requires ~18GB of RAM to run and crashes on the cluster if it doesn't get that.  RDP classification takes ~4 mins with this dataset.
@@ -505,7 +510,8 @@ mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_m
 ### I have put a copy of table_300test_B_97.RDPmidori.txt in the analysis/ folder, for teaching purposes.
 
 echo "Assignment probability minimum set to: " ${ARTHMINPROB}
-# We have to use some bash tricks to do the following bit efficiently.  First, we keep only the OTUs that are assigned to "Arthropoda" at probability >= 0.80, creating a new file called table_300test_B_97.RDPmidori_Arthropoda.txt.  Then we remove the annoying double tab from one of the lines in table_300test_B_97.RDPmidori_Arthropoda.txt (requires a sed and a mv command). Then use a combination of seqtk and cut to filter out the non-Arthropoda OTUs from the file, creating a new file:  table_300test_B_${SUMASIM}_Arthropoda.fas. At the end, your OTU table (table_300test_B_97.RDPmidori_Arthropoda.txt) and your OTU representative fasta file (table_300test_B_${SUMASIM}_Arthropoda.fas) should have the same number of OTUs;  you check this with wc -l.
+# We have to use some bash tricks to do the following bit efficiently.  First, we keep only the OTUs that are assigned to "Arthropoda" at probability >= 0.80, creating a new file called table_300test_B_97.RDPmidori_Arthropoda.txt.  Then we remove the annoying double tab from one of the lines in table_300test_B_97.RDPmidori_Arthropoda.txt (requires a sed and a mv command). Then use a combination of seqtk and cut to filter out the non-Arthropoda OTUs from the file, creating a new file:
+table_300test_B_${SUMASIM}_Arthropoda.fas. At the end, your OTU table (table_300test_B_97.RDPmidori_Arthropoda.txt) and your OTU representative fasta file (table_300test_B_${SUMASIM}_Arthropoda.fas) should have the same number of OTUs;  you check this with wc -l.
 
 
 cd ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/OTU_tables
@@ -549,6 +555,7 @@ grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda fi
 # Hemiptera;Caliscelidae;Bruchomorpha is missing its family in the Midori database. So the identifcation omits the family name. This prevents R from inputting the OTU table.
 
 # DANGEROUS CODE:  RUN ONLY ONCE AFTER GENERATING THE RDP ARTHROPODA-ONLY TABLES, BECAUSE IF RUN MORE THAN ONCE, WILL INSERT THE NEW TAXONOMIC RANK (e.g. Caliscelidae family 0.5)  MORE THAN ONCE
+
 # uncomment and run
 # cd ${HOMEFOLDER}${ANALYSIS}/${OTUTABLEFOLDER}/OTU_tables
 #
