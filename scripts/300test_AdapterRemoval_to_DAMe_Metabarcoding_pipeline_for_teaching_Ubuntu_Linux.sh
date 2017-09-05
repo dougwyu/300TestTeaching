@@ -419,7 +419,7 @@ echo "Analysing filter.py output where each (unique) sequence appeared in ≥ ${
 
 cd ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
 
-python ${DAME}assessClusteringParameters.py -i FilteredReads.forsumaclust.nochimeras.fna -mint 0.8 -minR 0.6 -step 0.05 -t 4 -o COIclusterassess_mint08_minR06_step005_Filter_min${MINPCR}PCRs_min${MINREADS}copies_${sample}.pdf
+python ${DAME}assessClusteringParameters.py -i FilteredReads.forsumaclust.nochimeras.fna -mint 0.8 -minR 0.6 -step 0.05 -t 4 -o COIclusterassess_mint08_minR06_step005_Filter_min${MINPCR}PCRs_min${MINREADS}copies_B.pdf
 
 # Teaching note.  The key result is that very few to no reads are similar at 96-97%.  This similarity threshold represents the famous 'barcoding gap,' and we choose 97% as the clustering threshold for Sumaclust
 
@@ -433,7 +433,7 @@ python ${DAME}tabulateSumaclust.py -h
 echo ${SUMASIM} # confirm that there is a similarity value chosen
 SUMASIM=97 # if there is no SUMASIM value
 echo ${SUMASIM} # confirm that there is a similarity value chosen
-cd ${HOMEFOLDER}data/seqs/folder${sample}/Filter_min${MINPCR}PCRs_min${MINREADS}copies_${sample}
+cd ${HOMEFOLDER}data/seqs/folderB/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
 
 # cluster reads into OTUs. Output file assigns each read to a cluster.
 sumaclust -t .${SUMASIM} -e FilteredReads.forsumaclust.nochimeras.fna > OTUs_${SUMASIM}_sumaclust.fna
@@ -516,7 +516,7 @@ sed -E 's/\t\t/\t/' table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt > table_
 mv table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_nodbltab.txt table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 
 seqtk subseq table_300test_B_${SUMASIM}.fas <(cut -f 1 table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt) > table_300test_B_${SUMASIM}_Arthropoda.fas
-     # <(cut -f 1 table_300test_${sample}_${sim}.RDPmidori_Arthropoda.txt) produces the list of sequences to keep
+     # <(cut -f 1 table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt) produces the list of sequences to keep
 
 echo "OTU tables"
 wc -l table_300test_B_${SUMASIM}.RDPmidori.txt # before Arthropoda filtering
