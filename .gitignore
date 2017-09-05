@@ -11,8 +11,6 @@ scripts/software_versions.txt
 
 scripts/analysis_blastMTB.R
 
-analysis/OTUs_min2PCRs_min4copies/software_versions.txt
-
 analysis/OTUs_min2PCRs_min4copies/
 
 data/seqs/folder_B/
