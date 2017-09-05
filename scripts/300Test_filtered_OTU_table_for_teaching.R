@@ -16,6 +16,7 @@ library("tidyverse"); packageVersion("tidyverse") # includes all data-formatting
 
 # set your path to the OTU_tables folder that was the product of the DAMe pipeline
 path_name <- file.path("~/Xiaoyangmiseqdata/MiSeq_20170410/300TestTeaching/analysis/OTUs_min2PCRs_min4copies/OTU_tables/")
+# path_name <- file.path("/home/dougwyu/300TestTeaching/analysis/OTUs_min2PCRs_min4copies/OTU_tables/")  # for the Ubuntu Linux vdi users
 setwd(path_name)
 getwd()
 
@@ -256,5 +257,16 @@ with(env, ordispider(ordination, evenness, cex=cexnum, draw="polygon", col=c("bl
 # https://github.com/hallamlab/mp_tutorial/wiki/Taxonomic-Analysis
 
 
+####################################################################
+# Dropout analysis
+####################################################################
+
+# Hits:  How many of the OTUs do match the input reference sequences ("MTB")? True positives
+# Dropins:  How many of the OTUs do not match an input reference sequence (MTB)? False positives
+# Dropouts:  How many of the MTB sequences did not show up in the OTU dataset? False negatives
+
+# We blasted the OTU sequences against the MTB fasta file (data/MTB/MTB_AllInputRefSeqs_20170726.fasta), which has the standard DNA barcode sequence for each input species. Note that I have created a blastdb format for blasting already.
+# 
+# The blast results are in:  table_300test_B_97_Arthropoda.blastnMTB.txt
 
 
