@@ -14,3 +14,5 @@ scripts/analysis_blastMTB.R
 analysis/OTUs_min2PCRs_min4copies/
 
 data/seqs/folder_B/
+
+analysis/OTUs_min1PCRs_min1copies/
