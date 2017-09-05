@@ -510,9 +510,11 @@ echo "Assignment probability minimum set to: " ${ARTHMINPROB}
 
 cd ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/OTU_tables
 ls # confirm you are in the correct folder
+
 awk -v arthmin=${ARTHMINPROB} '$8 ~ /Arthropoda/ && $10 >= arthmin { print }' table_300test_B_${SUMASIM}.RDPmidori.txt > table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 
 sed -E 's/\t\t/\t/' table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt > table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_nodbltab.txt
+
 mv table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_nodbltab.txt table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 
 seqtk subseq table_300test_B_${SUMASIM}.fas <(cut -f 1 table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt) > table_300test_B_${SUMASIM}_Arthropoda.fas
@@ -524,9 +526,6 @@ wc -l table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt # after Arthropoda fil
 echo "fasta files"
 grep ">" table_300test_B_${SUMASIM}.fas | wc -l # before Arthropoda filtering
 grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda filtering
-
-# cleanup
-rm -f table_300test_B_97.RDPmidori_Arthropoda_nodbltab.txt
 
 # The number of rows in the final OTU table and the final fasta file should be equal to the number of sequences in the final fasta file:  220.
 
