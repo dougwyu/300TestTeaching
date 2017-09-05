@@ -363,7 +363,7 @@ python ${DAME}filter.py -psInfo ${HOMEFOLDER}data/PSinfo_300test_COIB.txt -x ${P
 
 # Teaching note. The output file is called FilteredReads.fna, inside the Filter_min2PCRs_min4copies_B folder.  This is the product of all your hard work!  The next step is to figure out how best to cluster these reads into OTUs.
 
-head FilteredReads.fna
+head ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B/FilteredReads.fna
 
 # re-run plotLengthFreqMetrics_perSample.py
 cd ${HOMEFOLDER}data/seqs/folder_B/Filter_min${MINPCR}PCRs_min${MINREADS}copies_B
