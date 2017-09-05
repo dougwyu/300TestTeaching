@@ -159,7 +159,7 @@ OTU158		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Insecta	c
 OTU159		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.99	Insecta	class	0.96	Diptera	order	0.73	Culicidae	family	0.07	Anopheles	genus	0.05	Anopheles nivipes	species	0.05
 OTU160		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.98	Insecta	class	0.98	Lepidoptera	order	0.95	Xyloryctidae	family	0.16	Lichenaula	genus	0.16	Lichenaula nr. arisema CCDB-15742-F12	species	0.16
 OTU161		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Insecta	class	1.0	Lepidoptera	order	0.99	Elachistidae	family	0.08	Elachista	genus	0.08	Elachista fucosa	species	0.04
-OTU162		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.96	Insecta	class	0.93	Hemiptera	order	0.71	Bruchomorpha	genus	0.13	Bruchomorpha keidensia	species	0.05
+OTU162		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.96	Insecta	class	0.93	Hemiptera	order	0.71	Caliscelidae	family	0.50	Bruchomorpha	genus	0.13	Bruchomorpha keidensia	species	0.05
 OTU163		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Insecta	class	1.0	Coleoptera	order	0.87	Ciidae	family	0.1	Ceracis	genus	0.09	Ceracis cucullatus	species	0.09
 OTU164		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.96	Insecta	class	0.96	Diptera	order	0.5	Calliphoridae	family	0.25	Chrysomya	genus	0.25	Chrysomya greenbergi	species	0.21
 OTU165		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.86	Insecta	class	0.81	Hemiptera	order	0.54	Cixiidae	family	0.09	Oliarus	genus	0.07	Oliarus quinquelineatus	species	0.07
