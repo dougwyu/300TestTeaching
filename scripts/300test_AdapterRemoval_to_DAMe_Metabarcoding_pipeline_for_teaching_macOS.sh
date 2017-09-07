@@ -114,11 +114,11 @@ echo "SPAdes v3.10.1" >> software_versions.txt # SPAdes v3.10.1
 # as of 5 Sep 2017, there is a new version of spades:  3.11.1.  We are not using it here, but you should use it in real life
 
 # Each pair of (the reduced) fastq files typically requires 4-5 minutes. The original files required ~45 minutes per library, on an Core i5 MacBook Pro, using only 3 threads. We are not denoising the unpaired reads.
-# ~/src/SPAdes-3.11.0-Darwin/bin/spades.py # v. 3.11 as an option
 
 spades.py --only-error-correction -1 sickle_B1_R1.fq -2 sickle_B1_R2.fq -o SPAdes_hammer_B1 -t 3
 spades.py --only-error-correction -1 sickle_B2_R1.fq -2 sickle_B2_R2.fq -o SPAdes_hammer_B2 -t 3
 spades.py --only-error-correction -1 sickle_B3_R1.fq -2 sickle_B3_R2.fq -o SPAdes_hammer_B3 -t 3
+# ~/src/SPAdes-3.11.0-Darwin/bin/spades.py # v. 3.11 as an option
 
 # Now you can remove the sickle files
 rm sickle_*.fq

@@ -25,7 +25,9 @@ set -o pipefail
 # The DAMe supporting files are placed in 300TestTeaching/data/
 # The analysis outputs are placed in in 300TestTeaching/analysis/
 
-# Do not use the ~ shortcut
+# Set path_to_your_homefolder. Do not use the ~ shortcut.
+# cd into to the 300TestTeaching folder
+pwd # provides the full pathname to the 300TestTeaching folder. Substitute for the pathname below
 HOMEFOLDER="/home/dougwyu/300TestTeaching/"  # This is the full pathname
 echo "Home folder is" ${HOMEFOLDER}
 
@@ -285,7 +287,7 @@ mv pool3/heatmap.pdf heatmap_B3.pdf
 
 # Because we independently carried out PCR 3 times for each sample, the 3 PCRs for each sample should show high similarity. If not, then something went wrong in the PCR setup (e.g. PCR failure, use of wrong sample). This step calculates the Renkonen Similarity Index (RSI).  See the DAMe paper for explanation.
 
-# First step is to use filter.py but keep *all* sequences and then run RSI.py. This step can take > 1 hr for a normally sized file (3 pools)
+# First step is to use filter.py but keep *all* sequences and then run RSI.py. This step can take > 1 hr for a typical sized file (3 pools)
 
 # The folders holding the three pools in Experiment B need to be named pool1/, pool2/, and pool3/.
 
@@ -510,8 +512,7 @@ mv ${HOMEFOLDER}${ANALYSIS}OTU_transient_results/ ${HOMEFOLDER}${ANALYSIS}OTUs_m
 ### I have put a copy of table_300test_B_97.RDPmidori.txt in the analysis/ folder, for teaching purposes.
 
 echo "Assignment probability minimum set to: " ${ARTHMINPROB}
-# We have to use some bash tricks to do the following bit efficiently.  First, we keep only the OTUs that are assigned to "Arthropoda" at probability >= 0.80, creating a new file called table_300test_B_97.RDPmidori_Arthropoda.txt.  Then we remove the annoying double tab from one of the lines in table_300test_B_97.RDPmidori_Arthropoda.txt (requires a sed and a mv command). Then use a combination of seqtk and cut to filter out the non-Arthropoda OTUs from the file, creating a new file:
-table_300test_B_${SUMASIM}_Arthropoda.fas. At the end, your OTU table (table_300test_B_97.RDPmidori_Arthropoda.txt) and your OTU representative fasta file (table_300test_B_${SUMASIM}_Arthropoda.fas) should have the same number of OTUs;  you check this with wc -l.
+# We have to use some bash tricks to do the following bit efficiently.  First, we keep only the OTUs that are assigned to "Arthropoda" at probability >= 0.80, creating a new file called table_300test_B_97.RDPmidori_Arthropoda.txt.  Then we remove the annoying double tab from one of the lines in table_300test_B_97.RDPmidori_Arthropoda.txt (requires a sed and a mv command). Then use a combination of seqtk and cut to filter out the non-Arthropoda OTUs from the file, creating a new file: table_300test_B_${SUMASIM}_Arthropoda.fas. At the end, your OTU table (table_300test_B_97.RDPmidori_Arthropoda.txt) and your OTU representative fasta file (table_300test_B_${SUMASIM}_Arthropoda.fas) should have the same number of OTUs;  you check this with wc -l.
 
 
 cd ${HOMEFOLDER}${ANALYSIS}OTUs_min${MINPCR}PCRs_min${MINREADS}copies/OTU_tables
