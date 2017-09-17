@@ -118,7 +118,7 @@ threshold_otu_size <- 6
 
 
 communityAll <- communityAll[, colSums(communityAll) >= threshold_otu_size]
-rowSums(communityAll) # confirm that all samples (rows) still have non-zero OTUs in them.  This isn't a risk with this dataset, but some datasets have samples with very few, small OTUs.  Removing small OTUs will produce samples (rows) that have almost no data.  If so, you'll wan to remove these here
+rowSums(communityAll) # confirm that all samples (rows) still have non-zero OTUs in them.  This isn't a risk with this dataset, but some datasets have samples with very few, small OTUs.  Removing small OTUs will produce samples (rows) that have almost no data.  If so, you'll want to remove these here
 
 
 #### Create a new full OTU table (OTU X sample), including the taxonomic information and filtering out the phyloseq-determined small OTUs from the original otutablefull_A1_97 type files (using left_join()). This dataset also no longer has the PC column. 
