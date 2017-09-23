@@ -110,8 +110,8 @@ rm Adaptermv*.*
 
 spades.py -h
 spades.py -v # confirm the version
-echo "SPAdes v3.10.1" >> software_versions.txt # SPAdes v3.10.1
-# as of 5 Sep 2017, there is a new version of spades:  3.11.1.  We are not using it here, but you should use it in real life
+echo "SPAdes v3.11.0" >> software_versions.txt # SPAdes v3.11.0
+# as of 5 Sep 2017, there is a new version of spades:  3.11.0
 
 # Each pair of (the reduced) fastq files typically requires 4-5 minutes. The original files required ~45 minutes per library, on an Core i5 MacBook Pro, using only 3 threads. We are not denoising the unpaired reads.
 
@@ -136,9 +136,7 @@ echo "pandaseq 2.11" >> software_versions.txt
 
 # Each pair of fastq files takes ~ 2 secs
 pandaseq -f SPAdes_hammer_B1/corrected/sickle_B1_R1.00.0_0.cor.fastq.gz -r SPAdes_hammer_B1/corrected/sickle_B1_R2.00.0_0.cor.fastq.gz -A simple_bayesian -d bfsrk -F -N -T 7 -g pandaseq_log_B1.txt -w sickle_cor_panda_B1.fastq
-
 pandaseq -f SPAdes_hammer_B2/corrected/sickle_B2_R1.00.0_0.cor.fastq.gz -r SPAdes_hammer_B2/corrected/sickle_B2_R2.00.0_0.cor.fastq.gz -A simple_bayesian -d bfsrk -F -N -T 7 -g pandaseq_log_B2.txt -w sickle_cor_panda_B2.fastq
-
 pandaseq -f SPAdes_hammer_B3/corrected/sickle_B3_R1.00.0_0.cor.fastq.gz -r SPAdes_hammer_B3/corrected/sickle_B3_R2.00.0_0.cor.fastq.gz -A simple_bayesian -d bfsrk -F -N -T 7 -g pandaseq_log_B3.txt -w sickle_cor_panda_B3.fastq
 
 
@@ -211,18 +209,17 @@ python ${DAME}sort.py -fq sickle_cor_panda_B3.fastq.gz -p ${HOMEFOLDER}data/Prim
 
 # Teaching note.  Look at the sort.py output for B3:
 
-     # Number of erroneous sequences in file sickle_cor_panda_B3.fastq.gz (with errors in the sequence of primer or tags, or no barcode amplified):
-     # 12033
-     #
+     # Number of erroneous sequences in file sickle_cor_panda_B3.fastq.gz (with errors in the sequence of primer or tags, or no barcode amplified): 12011
      #     No sequence between primers         : 0
-     #     Tags pair not found                 : 2024
-     #     F primer found, R' primer not found : 4186
-     #     R primer found, F' primer not found : 1268
-     #     Neither F nor R primer found        : 4555
+     #     Tags pair not found                 : 2029
+     #     F primer found, R' primer not found : 4176
+     #     R primer found, F' primer not found : 1255
+     #     Neither F nor R primer found        : 4551
      #
-     # Number of valid tag pairs found         : 33468
-     #     F-R' barcodes found                 : 25153
-     #     R-F' barcodes found                 : 8315
+     # Number of valid tag pairs found         : 33485
+     #     F-R' barcodes found                 : 25157
+     #     R-F' barcodes found                 : 8328
+
 
 
 # sort.py looks for the tag pairs that you expect to be in this experiment B.
@@ -535,9 +532,9 @@ echo "fasta files"
 grep ">" table_300test_B_${SUMASIM}.fas | wc -l # before Arthropoda filtering
 grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda filtering
 
-# The number of rows in the final OTU table and the final fasta file should be equal to the number of sequences in the final fasta file:  220.
+# The number of rows in the final OTU table and the final fasta file should be equal to the number of sequences in the final fasta file:  221.
 
-# 220 OTU sequences is the final product. These OTUs have been filtered for reliability and taxonomic assignment to Arthropoda.
+# 221 OTU sequences is the final product. These OTUs have been filtered for reliability and taxonomic assignment to Arthropoda.
 
 # The third stage is to read the files into R to perform the final filtering steps. In R, we filter out "small" OTUs using the phyloseq method and we filter out contaminant sequences via direct observation of the negative controls and positive controls. We also remove the positive control sequences from the dataset.
 
@@ -562,6 +559,8 @@ grep ">" table_300test_B_${SUMASIM}_Arthropoda.fas | wc -l # after Arthropoda fi
 # cd ${HOMEFOLDER}${ANALYSIS}/${OTUTABLEFOLDER}/OTU_tables
 #
 # gsed -E 's/Bruchomorpha\tgenus/Caliscelidae\tfamily\t0.50\t\Bruchomorpha\tgenus/' table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt > table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_family.txt
+#
+# grep "Bruchomorpha" table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_family.txt
 #
 # mv table_300test_B_${SUMASIM}.RDPmidori_Arthropoda_family.txt table_300test_B_${SUMASIM}.RDPmidori_Arthropoda.txt
 #
@@ -590,6 +589,7 @@ source .bash_profile
 brew tap homebrew/science # a "tap" is a source of "installation formulae" of specialist software, here, bioinformatics
 brew install git
 brew install coreutils
+brew install wget
 brew install homebrew/science/adapterremoval # https://github.com/MikkelSchubert/adapterremoval
 brew install homebrew/science/sickle # https://github.com/najoshi/sickle
 brew install homebrew/science/pandaseq # https://github.com/neufeld/pandaseq/releases
@@ -600,6 +600,13 @@ brew install homebrew/science/spades # http://cab.spbu.ru/software/spades/
 # only on macOS
 # install gsed
 brew install gnu-sed # (gsed == GNU version of sed == Linux version of sed)
+
+# only on macOS, if you don't have python/numpy/matplotlib installed
+cd ~/Desktop
+wget https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh
+bash Miniconda2-latest-MacOSX-x86_64.sh  # this installs conda, which is another package manager, but for python
+conda install numpy
+conda install matplotlib
 
 # only on Ubuntu
 # install numpy and matplotlib
