@@ -19,3 +19,5 @@ analysis/OTUs_min1PCRs_min1copies/
 
 data/seqs/folder_B_backup/
 .Rproj.user
+
+scripts/.Rhistory
