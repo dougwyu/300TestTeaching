@@ -158,6 +158,7 @@ OTU157		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.99	Insecta	
 OTU158		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.95	Insecta	class	0.95	Coleoptera	order	0.79	Curculionidae	family	0.62	Coccotrypes	genus	0.09	Coccotrypes cardamomi	species	0.08
 OTU159		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Insecta	class	1.0	Lepidoptera	order	0.95	Gelechiidae	family	0.06	Onebala	genus	0.05	Onebala hibisci	species	0.05
 OTU160		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.98	Insecta	class	0.98	Lepidoptera	order	0.95	Xyloryctidae	family	0.16	Lichenaula	genus	0.16	Lichenaula nr. arisema CCDB-15742-F12	species	0.16
+OTU161	root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.96	Insecta	class	0.93	Hemiptera	order	0.71	Caliscelidae	family	0.50	Bruchomorpha	genus	0.13	Bruchomorpha keidensia	species	0.06
 OTU162		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Insecta	class	1.0	Lepidoptera	order	0.99	Elachistidae	family	0.08	Elachista	genus	0.08	Elachista fucosa	species	0.04
 OTU163		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Insecta	class	1.0	Coleoptera	order	0.87	Ciidae	family	0.1	Ceracis	genus	0.09	Ceracis cucullatus	species	0.09
 OTU164		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.86	Insecta	class	0.81	Hemiptera	order	0.54	Cixiidae	family	0.09	Oliarus	genus	0.07	Oliarus quinquelineatus	species	0.07
@@ -223,6 +224,7 @@ OTU223		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.99	Insecta	
 OTU224		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.75	Insecta	class	0.7	Lepidoptera	order	0.11	Pieridae	family	0.04	Delias	genus	0.04	Delias pulla	species	0.04
 OTU225		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Arachnida	class	1.0	Araneae	order	1.0	Sparassidae	family	1.0	Heteropoda	genus	1.0	Heteropoda venatoria	species	1.0
 OTU226		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Insecta	class	1.0	Lepidoptera	order	1.0	Erebidae	family	1.0	Hypocala	genus	1.0	Hypocala subsatura	species	1.0
+OTU227		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.98	Insecta	class	0.94	Hymenoptera	order	0.72	Ichneumonidae	family	0.34	Homotropus	genus	0.07	Homotropus pacificus	species	0.07
 OTU228		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.99	Insecta	class	0.95	Diptera	order	0.44	Agromyzidae	family	0.15	Phytomyza	genus	0.12	Phytomyza subtenella	species	0.03
 OTU229		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	1.0	Insecta	class	1.0	Diptera	order	1.0	Mycetophilidae	family	1.0	Mycetophila	genus	1.0	Mycetophila lunata	species	1.0
 OTU230		root	root	1.0	Eukaryota	superkingdom	1.0	Arthropoda	phylum	0.84	Insecta	class	0.8	Diptera	order	0.25	Syrphidae	family	0.1	Toxomerus	genus	0.03	Toxomerus pallipes	species	0.02
