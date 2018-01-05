@@ -1,3 +1,10 @@
+# The wet lab protocol follows the DAMe protocol of Zepeda Mendoza, M. L., K. Bohmann, A. Carmona Baez, and 
+M. T. P. Gilbert. 2016. DAMe: a toolkit for the initial processing of datasets with PCR replicates of double-tagged 
+amplicons for DNA metabarcoding analyses. BMC Research Notes 9:255.  
+
+# This means that we subject each sample to three independent PCRs, with independent tags for each sample and each PCR.  W
+# We then use DAMe to filter out reads that appear in only one PCR. 
+
 # To download the fastq files
 cd 300TestTeaching/data/seqs
 ls # you should see "list.txt"
