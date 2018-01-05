@@ -1,7 +1,7 @@
-# Generates a heatmap from a SummaryCounts.txt file 
+    # Generates a heatmap from a SummaryCounts.txt file 
 
 options(echo=TRUE) # if you want see commands in output file
-args <- commandArgs(trailingOnly = TRUE)
+args <- commandArgs(trailingOnly = TRUE) # if you want to pass arguments to R from the shell (bash) command line
 print(args)
 
 

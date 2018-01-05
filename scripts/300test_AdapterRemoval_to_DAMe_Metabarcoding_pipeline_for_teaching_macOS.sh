@@ -113,11 +113,13 @@ spades.py -v # confirm the version
 echo "SPAdes v3.11.0" >> software_versions.txt # SPAdes v3.11.0
 # as of 5 Sep 2017, there is a new version of spades:  3.11.0
 
-# Each pair of (the reduced) fastq files typically requires 4-5 minutes. The original files required ~45 minutes per library, on an Core i5 MacBook Pro, using only 3 threads. We are not denoising the unpaired reads.
-
-spades.py --only-error-correction -1 sickle_B1_R1.fq -2 sickle_B1_R2.fq -o SPAdes_hammer_B1 -t 3
-spades.py --only-error-correction -1 sickle_B2_R1.fq -2 sickle_B2_R2.fq -o SPAdes_hammer_B2 -t 3
-spades.py --only-error-correction -1 sickle_B3_R1.fq -2 sickle_B3_R2.fq -o SPAdes_hammer_B3 -t 3
+# Each pair of (the reduced) fastq files typically requires 4-5 minutes.
+# The original files required ~45 minutes per library, on an Core i5 MacBook Pro, using 3 threads. We are not denoising the unpaired reads.
+# on a macbook pro with an 2.8 GHz i7 chip, i used -t 7 and -t 4, and both jobs finished in 2 mins and 20 secs approx.
+# Thus, only use as many threads as there are cores. Hyperthreading doesn't help
+spades.py --only-error-correction -1 sickle_B1_R1.fq -2 sickle_B1_R2.fq -o SPAdes_hammer_B1 -t 4
+spades.py --only-error-correction -1 sickle_B2_R1.fq -2 sickle_B2_R2.fq -o SPAdes_hammer_B2 -t 4
+spades.py --only-error-correction -1 sickle_B3_R1.fq -2 sickle_B3_R2.fq -o SPAdes_hammer_B3 -t 4
 # ~/src/SPAdes-3.11.0-Darwin/bin/spades.py # v. 3.11 as an option
 
 # Now you can remove the sickle files
