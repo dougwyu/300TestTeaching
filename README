@@ -1,18 +1,23 @@
 # The wet lab protocol follows the DAMe protocol of Zepeda Mendoza, M. L., K. Bohmann, A. Carmona Baez, and M. T. P. Gilbert. 2016. DAMe: a toolkit for the initial processing of datasets with PCR replicates of double-tagged amplicons for DNA metabarcoding analyses. BMC Research Notes 9:255.  
 
-# This means that we subject each sample to three independent PCRs, with independent tags for each sample and each PCR.  W
+# This means that we subject each sample to three independent PCRs, with independent tags for each sample and each PCR.  
 # We then use DAMe to filter out reads that appear in only one PCR. 
 
-# To download the fastq files
-cd 300TestTeaching/data/seqs
-ls # you should see "list.txt"
-wget https://www.dropbox.com/s/6wzp9pnne3abu8o/Experiment_B_fastqs.tar?dl=1
+# clone and unzip this repo in the root directory (or down a path where the folders have no spaces in their names)
+# you will have a folder called 300TestTeaching/
+
+# To download the fastq files:
+
+> cd 300TestTeaching/data/seqs
+> ls # you should see "list.txt"
+> wget https://www.dropbox.com/s/6wzp9pnne3abu8o/Experiment_B_fastqs.tar?dl=1
 
 # untar the sequence files but DO NOT UNZIP them
-tar -xvf Experiment_B_fastqs.tar?dl=1
-rm Experiment_B_fastqs.tar?dl=1
 
-# You will have the following 6 fastq.gz files in the data/seqs folder.
+> tar -xvf Experiment_B_fastqs.tar?dl=1
+> rm Experiment_B_fastqs.tar?dl=1
+
+# You will have the following 6 fastq.gz files in the 300TestTeaching/data/seqs folder.
 # B1_S4_L001_R1_001_0.1.fastq.gz
 # B1_S4_L001_R2_001_0.1.fastq.gz
 # B2_S5_L001_R1_001_0.1.fastq.gz
