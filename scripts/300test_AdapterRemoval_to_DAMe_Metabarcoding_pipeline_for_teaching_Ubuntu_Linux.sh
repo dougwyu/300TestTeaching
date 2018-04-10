@@ -581,6 +581,8 @@ exit
 # open Terminal
 sudo apt-get install build-essential curl file git python-setuptools
 # then follow the instructions on https://linuxbrew.sh
+
+
 # to use linuxbrew, run this command with each new terminal window
 source .bash_profile
 
@@ -606,43 +608,97 @@ sudo apt install python-pip
 pip install numpy
 pip install matplotlib
 
-## adapterremoval
+## adapterremoval on macOS and Ubuntu
 # brew install brewsci/bio/adapterremoval # https://github.com/MikkelSchubert/adapterremoval
 cd ~/Desktop
 git clone https://github.com/MikkelSchubert/adapterremoval.git
 cd adapterremoval
 make
 sudo make install
+AdapterRemoval -h
 
-## pandaseq
+## pandaseq on Ubuntu
 # brew install brewsci/bio/pandaseq # https://github.com/neufeld/pandaseq/releases
+sudo apt-add-repository ppa:neufeldlab/ppa && sudo apt-get update && sudo apt-get install pandaseq
+pandaseq -h
 
-## vsearch
+## pandaseq on macOS
+# either install binary
+https://github.com/neufeld/pandaseq/releases
+wget https://github.com/neufeld/pandaseq/releases/download/v2.11/PANDAseq-2.11.pkg
+     # go to Finder, find PANDAseq-2.11.pkg, click on it, and pandaseq will be installed in /usr/local/bin/pandaseq
+# or install from source
+brew install bzip2
+brew install libtool
+cd ~/src
+git clone https://github.com/neufeld/pandaseq.git
+cd pandaseq
+./autogen.sh && ./configure && make && sudo make install
+./pandaseq -h
+
+## vsearch on Ubuntu
+cd ~/Desktop
+wget https://github.com/torognes/vsearch/releases/download/v2.7.1/vsearch-2.7.1-linux-x86_64.tar.gz
+tar xzf vsearch-2.7.1-linux-x86_64.tar.gz
+cd vsearch-2.7.1-linux-x86_64/bin
+sudo mv vsearch /usr/local/bin
+vsearch
+
+## vsearch on macOS
 # brew install brewsci/bio/vsearch # https://github.com/torognes/vsearch
+cd ~/src
+wget https://github.com/torognes/vsearch/releases/download/v2.7.1/vsearch-2.7.1-macos-x86_64.tar.gz
+tar xzf vsearch-2.7.1-macos-x86_64.tar.gz
+cd vsearch-2.7.1-macos-x86_64/bin
+mv vsearch /usr/local/bin # override any older versions
+vsearch
 
-## DAMe
+## DAMe on macOS and Ubuntu
 cd ~/Desktop
 git clone https://github.com/shyamsg/DAMe.git # can read tags with heterogeneity spacers
 mv ~/Desktop/DAMe /usr/local/bin # on ubuntu will need sudo mv
 # no building needed
 
-## Sumatra
+## Sumatra on Ubuntu
+# links from https://git.metabarcoding.org/obitools/sumatra/wikis/home
 cd ~/Desktop/
-wget https://git.metabarcoding.org/obitools/sumatra/uploads/251020bbbd6c6595cb9fce6077e29952/sumatra_v1.0.20.tar.gz
-tar -zxvf sumatra_v1.0.20.tar.gz
-cd sumatra_v1.0.20/
-make # in Ubuntu
-make CC=clang # in macOS, disables OpenMP, which isn't on macOS
-mv sumatra /usr/local/bin # will need to use sudo mv on Ubuntu
+wget https://git.metabarcoding.org/obitools/sumatra/uploads/055a82b403495fd10a340a75b7dffba8/sumatra_user_manual.pdf
+wget https://git.metabarcoding.org/obitools/sumatra/uploads/fdc15699cf97fecefc09399bd570ad72/sumatra_v1.0.31.tar.gz
+tar –xf sumatra_v1.0.31.tar.gz
+cd sumatra_v1.0.31
+make
+sudo mv sumatra /usr/local/bin # will need to use sudo mv on Ubuntu
 
-## Sumaclust
+## Sumatra on macOS
+cd ~/src/
+# links from https://git.metabarcoding.org/obitools/sumatra/wikis/home
+wget https://git.metabarcoding.org/obitools/sumatra/uploads/055a82b403495fd10a340a75b7dffba8/sumatra_user_manual.pdf
+wget https://git.metabarcoding.org/obitools/sumatra/uploads/fdc15699cf97fecefc09399bd570ad72/sumatra_v1.0.31.tar.gz
+tar –xf sumatra_v1.0.31.tar.gz
+cd sumatra_v1.0.31
+make CC=clang # in macOS, disables OpenMP, which isn't on macOS
+mv sumatra /usr/local/bin 
+sumatra -v
+
+## Sumaclust on Ubuntu
 cd ~/Desktop/
 wget https://git.metabarcoding.org/obitools/sumaclust/uploads/69f757c42f2cd45212c587e87c75a00f/sumaclust_v1.0.20.tar.gz
 tar -zxvf sumaclust_v1.0.20.tar.gz
 cd sumaclust_v1.0.20/
 make # in Ubuntu
 make CC=clang # in macOS, disables OpenMP, which isn't on macOS
-mv sumaclust /usr/local/bin/ # will need to use sudo mv on Ubuntu
+sudo mv sumaclust /usr/local/bin/ # will need to use sudo mv on Ubuntu
+
+## Sumaclust on macOS
+cd ~/src/
+# links from https://git.metabarcoding.org/obitools/sumaclust/wikis/home
+wget https://git.metabarcoding.org/obitools/sumaclust/uploads/d6fdfa2bea0e6bf8edcd232d773ebb24/sumaclust_user_manual.pdf
+wget https://git.metabarcoding.org/obitools/sumaclust/uploads/59ff189079b9e318f07b9ff9d5fee54b/sumaclust_v1.0.31.tar.gz
+tar -zxvf sumaclust_v1.0.31.tar.gz
+cd sumaclust_v1.0.31/
+make CC=clang # in macOS, disables OpenMP, which isn't on macOS
+mv sumaclust /usr/local/bin/
+
 
 # if you need to resize the VirtualBox *.vdi on a Mac, follow these instructions
 # http://j4n.co/blog/expanding_virtualbox_on_a_mac
@@ -676,19 +732,20 @@ sudo apt update; sudo apt install atom
 sudo apt-get update
 sudo apt-get install r-base
 sudo apt-get install r-base-dev
-# homebrew-installed R is invisible to RStudio
+# NB brew-installed R is invisible to RStudio
 
 
 ## RStudio
 
 # on macOS
-# download binary from https://rstudio.org
+# download binary from https://www.rstudio.com/products/rstudio/download/#download
+# click on the link for Mac OSX 64-bit
 
 # on Ubuntu
-# download rstudio-xenial-1.0.153-amd64.deb from https://rstudio.org
-cd Downloads/
-sudo dpkg -i rstudio-xenial-1.0.153-amd64.deb
-sudo apt-get -f install
+# download binary from https://www.rstudio.com/products/rstudio/download/#download
+# click on the link for Ubuntu 64-bit
+# the browser has a down arrow level to the URL box, where you can monitor the download progress
+# let Ubuntu's software installer install it.
 
 
 ## R packages.  This step can take hours the first time
@@ -700,7 +757,8 @@ sudo apt-get install libcurl4-openssl-dev
 sudo apt-get install libssl-dev
 sudo apt-get install libxml2-dev
 
-# on macOS or Ubuntu, launch RStudio and run these commands in R
+# on macOS and Ubuntu, launch RStudio and run these commands in R
 install.packages(c("tidyverse", "data.table", "vegan", "car", "RColorBrewer"), dependencies = TRUE)
 source("https://bioconductor.org/biocLite.R") # to install bioinformatics packages
+biocLite() # installs bioconductor base packages
 biocLite("phyloseq") # install phyloseq
