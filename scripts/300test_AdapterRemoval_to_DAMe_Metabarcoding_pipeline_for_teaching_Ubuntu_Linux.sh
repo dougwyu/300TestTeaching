@@ -574,11 +574,14 @@ exit
 ####################################################################################################
 # Record of how I installed the software. Don't run this
 ####################################################################################################
-# The script uses quite a bit of open-source software and has been runon macOS and Ubuntu Linux.  Much of this software can be installed using Homebrew, which is a "package manager" for macOS.  Install that, and most software can then be installed and managed with a single command.
+# The script uses quite a bit of open-source software and has been run on macOS and Ubuntu Linux.  Much of this software can be installed using Homebrew, which is a "package manager" for macOS.  Install that, and most software can then be installed and managed with a single command.
 # In principle, you only need to do this once.  The whole installation can require several hours, depending on internet speed and whether you are installing on macOS or Linux
 
-## Linuxbrew:  if you install Linuxbrew on Ubuntu, to access Linuxbrew binaries, have to source .bash_profile with each new terminal window
-# https://linuxbrew.sh
+## Linuxbrew for Ubuntu
+# open Terminal
+sudo apt-get install build-essential curl file git python-setuptools
+# then follow the instructions on https://linuxbrew.sh
+# to use linuxbrew, run this command with each new terminal window
 source .bash_profile
 
 ## Homebrew for macOS
@@ -586,15 +589,12 @@ source .bash_profile
 
 
 # after Homebrew or Linuxbrew  is installed, run these brew installations
-brew tap homebrew/science # a "tap" is a source of "installation formulae" of specialist software, here, bioinformatics
-brew install git
+brew tap brewsci/bio # a "tap" is a source of "installation formulae" of specialist software, here, bioinformatics
+brew tap tseemann/homebrew-bio
+brew install seqtk # https://github.com/lh3/seqtk
+brew install spades # http://cab.spbu.ru/software/spades/
 brew install coreutils
-brew install homebrew/science/adapterremoval # https://github.com/MikkelSchubert/adapterremoval
-brew install homebrew/science/sickle # https://github.com/najoshi/sickle
-brew install homebrew/science/pandaseq # https://github.com/neufeld/pandaseq/releases
-brew install homebrew/science/vsearch # https://github.com/torognes/vsearch
-brew install homebrew/science/seqtk # https://github.com/lh3/seqtk
-brew install homebrew/science/spades # http://cab.spbu.ru/software/spades/
+brew install sickle # https://github.com/najoshi/sickle
 
 # only on macOS
 # install gsed
@@ -605,6 +605,20 @@ brew install gnu-sed # (gsed == GNU version of sed == Linux version of sed)
 sudo apt install python-pip
 pip install numpy
 pip install matplotlib
+
+## adapterremoval
+# brew install brewsci/bio/adapterremoval # https://github.com/MikkelSchubert/adapterremoval
+cd ~/Desktop
+git clone https://github.com/MikkelSchubert/adapterremoval.git
+cd adapterremoval
+make
+sudo make install
+
+## pandaseq
+# brew install brewsci/bio/pandaseq # https://github.com/neufeld/pandaseq/releases
+
+## vsearch
+# brew install brewsci/bio/vsearch # https://github.com/torognes/vsearch
 
 ## DAMe
 cd ~/Desktop
@@ -648,8 +662,8 @@ sudo apt update; sudo apt install atom
 # sudo apt remove --purge atom
 # In Atom, ctrl-shift-P  This opens a small window for access to all of Atom's commands.
 # open Atom and install platformio-ide-terminal, which allows you to send commands to the terminal within Atom
-# In Atom, ctrl+, (control comma) opens the settings panel, which lets you install packages and do customise Atom
-# type platformio-ide-terminal into the "Filter Packages by Name" window and press Enter. Click on the blue Install button.
+# In Atom, ctrl+, (control comma) opens the settings panel, which lets you install packages and customise Atom
+# Click on the Install panel, type platformio-ide-terminal into the "Filter Packages by Name" window and press Enter. Click on the blue Install button.
 # A new terminal can be opened in the bottom left of the Atom window, by clicking on the + sign.
 
 
