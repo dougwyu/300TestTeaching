@@ -10,12 +10,12 @@
 
 > cd 300TestTeaching/data/seqs
 > ls # you should see "list.txt"
-> wget https://www.dropbox.com/s/6wzp9pnne3abu8o/Experiment_B_fastqs.tar?dl=1
+> wget https://www.dropbox.com/s/31twk1qryjajhdo/Experiment_B.tar.gz?dl=1
 
-# untar the sequence files but DO NOT UNZIP them
+# untar the downloaded file
 
-> tar -xvf Experiment_B_fastqs.tar?dl=1
-> rm Experiment_B_fastqs.tar?dl=1
+> tar -xzvf Experiment_B.tar.gz?dl=1
+> rm Experiment_B.tar.gz?dl=1
 
 # You will have the following 6 fastq.gz files in the 300TestTeaching/data/seqs folder.
 # B1_S4_L001_R1_001_0.1.fastq.gz
