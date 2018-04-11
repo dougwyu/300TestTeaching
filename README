@@ -3,8 +3,8 @@
 # This means that we subject each sample to three independent PCRs, with independent tags for each sample and each PCR.  
 # We then use DAMe to filter out reads that appear in only one PCR. 
 
-# clone and unzip this repo in the root directory (or down a path where the folders have no spaces in their names)
-# you will have a folder called 300TestTeaching/
+# Clone and unzip this repo in the root directory (or down a path where the folders have no spaces in their names)
+# You will have a folder called 300TestTeaching/
 
 # To download the fastq files:
 
@@ -14,8 +14,8 @@
 
 # untar the downloaded file
 
-> tar -xzvf Experiment_B.tar.gz?dl=1
-> rm Experiment_B.tar.gz?dl=1
+> tar -xzvf 'Experiment_B.tar.gz?dl=1'
+> rm 'Experiment_B.tar.gz?dl=1'
 
 # You will have the following 6 fastq.gz files in the 300TestTeaching/data/seqs folder.
 # B1_S4_L001_R1_001_0.1.fastq.gz
