@@ -91,6 +91,7 @@ AdapterRemoval  --file1 B3_S6_L001_R1_001_0.1.fastq.gz --file2 B3_S6_L001_R2_001
 ####################################################################################################
 
 sickle -h
+sickle --version # sickle version 1.33
 sickle --version >> software_versions.txt # sickle version 1.33
 
 # Usage: sickle pe [options] -f <paired-end forward fastq file> -r <paired-end reverse fastq file> -o <trimmed PE forward file> -p <trimmed PE reverse file> -s <trimmed singles file> -t <quality type>
@@ -677,7 +678,7 @@ wget https://git.metabarcoding.org/obitools/sumatra/uploads/fdc15699cf97fecefc09
 tar –xf sumatra_v1.0.31.tar.gz
 cd sumatra_v1.0.31
 make CC=clang # in macOS, disables OpenMP, which isn't on macOS
-mv sumatra /usr/local/bin 
+mv sumatra /usr/local/bin
 sumatra -v
 
 ## Sumaclust on Ubuntu
