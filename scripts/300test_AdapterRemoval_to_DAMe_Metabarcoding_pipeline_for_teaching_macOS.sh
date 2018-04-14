@@ -699,4 +699,4 @@ sudo apt-get install libxml2-dev
 # on macOS or Ubuntu, launch RStudio and run these commands in R
 install.packages(c("tidyverse", "data.table", "vegan", "car", "RColorBrewer"), dependencies = TRUE)
 source("https://bioconductor.org/biocLite.R") # to install bioinformatics packages
-biocLite("phyloseq") # install phyloseq
+biocLite("phyloseq") # install phyloseq.  this can be difficult.  make sure that you have installed the latest version of gfortran from https://gcc.gnu.org/wiki/GFortranBinaries and that you have changed to the Apple veclib
