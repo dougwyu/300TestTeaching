@@ -730,6 +730,8 @@ sudo apt update; sudo apt install atom
 # download binary from https://cran.r-project.org
 
 # on Ubuntu
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+sudo add-apt-repository 'deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu xenial/'
 sudo apt-get update
 sudo apt-get install r-base
 sudo apt-get install r-base-dev
@@ -752,14 +754,26 @@ sudo apt-get install r-base-dev
 ## R packages.  This step can take hours the first time
 
 # on Ubuntu only, run in the terminal
-# the first four lines are for Linux libraries that are needed for R package installation
+# the first five lines are for Linux libraries that are needed for R package installation
 sudo apt-get install libjpeg62
 sudo apt-get install libcurl4-openssl-dev
 sudo apt-get install libssl-dev
 sudo apt-get install libxml2-dev
+sudo apt-get install libnlopt-dev # to allow nloptr package to be installed
 
 # on macOS and Ubuntu, launch RStudio and run these commands in R
-install.packages(c("tidyverse", "data.table", "vegan", "car", "RColorBrewer"), dependencies = TRUE)
+
+install.packages(c("tidyverse", "data.table", "vegan", "car", "RColorBrewer", "devtools"), dependencies = TRUE)
+
+# if nloptr doesn't install successfully, which will prevent car from being instlled,
+# try first installing nlopt directly on Ubuntu using:
+# sudo apt-get install libnlopt-dev
+# then follow up with this:
+install.packages("nloptr", dependencies = TRUE)
+# then rerun the previous install.packages() command to install car, etc.
+
+
 source("https://bioconductor.org/biocLite.R") # to install bioinformatics packages
-biocLite() # installs bioconductor base packages
-biocLite("phyloseq") # install phyloseq
+biocLite(pkgs = c("GenomicRanges", "Biobase", "IRanges", "AnnotationDbi", "dada2"))
+biocLite(pkgs = c("phyloseq"))
+biocValid()  # to check on validity and cross-compatibility of bioconductor packages
